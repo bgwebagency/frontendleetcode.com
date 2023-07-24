@@ -1,0 +1,111 @@
+# Unique Array
+
+**Difficulty:** Easy, **Duration:** 10 minutes, **Languages:** JS, TS, **Author:** [Kiran Dash](https://github.com/kirandash)
+
+## Question
+
+Create a function `uniqueArray`, which can be used to create a new array with unique elements from an existing array.
+
+## Example
+
+```ts filename="example.ts" copy
+uniqueArray([2, 1, 2]) // [2, 1]
+```
+
+## Exercise
+
+<iframe
+  src="https://stackblitz.com/edit/unique-array-exercise?embed=1&devtoolsheight=100"
+  style={{ width: '100%', height: '350px', marginTop: '20px' }}
+></iframe>
+
+## Solution
+
+### Brute force with `Array.prototype.indexOf()`
+
+```ts filename="solution.ts" copy
+export default function uniqueArray(input: Array<number>): Array<number> {
+  const uniqueElements = []
+  for (let elem of input) {
+    if (uniqueElements.indexOf(elem) === -1) {
+      uniqueElements.push(elem)
+    }
+  }
+  return uniqueElements
+}
+```
+
+Time Complexity: `O(n^2)` since `Array.prototype.indexOf()` is an O(n) operation
+
+### Brute force with `Array.prototype.includes()`
+
+```ts filename="solution.ts" copy
+export default function uniqueArray(input: Array<number>): Array<number> {
+  const uniqueElements = []
+  for (let elem of input) {
+    if (!uniqueElements.includes(elem)) {
+      uniqueElements.push(elem)
+    }
+  }
+  return uniqueElements
+}
+```
+
+Time Complexity: `O(n^2)` since `Array.prototype.includes()` is an O(n) operation
+
+**Demo**
+
+<iframe
+  src="https://stackblitz.com/edit/unique-array-array-includes?embed=1&devtoolsheight=100&forceEmbedLayout=true"
+  style={{ width: '100%', height: '500px', marginTop: '20px' }}
+></iframe>
+
+### Tracking elements with `Set` 🔥
+
+Instead of `Array.prototype.includes()`, we can use `Set.prototype.has()` to check for existence of an element with `O(1)` time complexity
+
+```ts filename="solution.ts" copy
+export default function uniqueArray(input: Array<number>): Array<number> {
+  const uniqueElements = []
+  const seenElements = new Set()
+
+  for (let elem of input) {
+    if (!seenElements.has(elem)) {
+      uniqueElements.push(elem)
+      seenElements.add(elem)
+    }
+  }
+
+  return uniqueElements
+}
+```
+
+Time Complexity: `O(n)`
+
+**Demo**
+
+<iframe
+  src="https://stackblitz.com/edit/unique-array-solution?embed=1&devtoolsheight=100&forceEmbedLayout=true"
+  style={{ width: '100%', height: '500px', marginTop: '20px' }}
+></iframe>
+
+### Convert to `Set` and back to `Array`
+
+```ts filename="solution.ts" copy
+export default function uniqueArray(input: Array<number>): Array<number> {
+  return Array.from(new Set(input))
+}
+```
+
+Time Complexity: `O(n)`
+
+**Demo**
+
+<iframe
+  src="https://stackblitz.com/edit/unique-array-one-liner-solution?embed=1&devtoolsheight=100&forceEmbedLayout=true"
+  style={{ width: '100%', height: '350px', marginTop: '20px' }}
+></iframe>
+
+## Resources
+
+- [Lodash `_.uniq`](https://lodash.com/docs/4.17.15#uniq)

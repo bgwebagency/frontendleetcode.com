@@ -1,16 +1,27 @@
-# Nextra Docs Template 
+<div align="center">
+  
+  <h1><a href="https://www.frontendleetcode.com/">frontendleetcode.com</a></h1>
 
-This is a template for creating documentation with [Nextra](https://nextra.site).
+📚 Front End interview preparation materials. All resources available for free!</span>
 
-[**Live Demo →**](https://nextra-docs-template.vercel.app)
+Feel free to reach us on our social platforms! 😊 <br />
+<a href="https://www.youtube.com/@bgwebagency">YouTube</a> ||
+<a href="https://discord.com/invite/62VR3MMCVm">Discord</a> ||
+<a href="https://www.instagram.com/bgwebagency">Instagram</a> ||
+<a href="https://www.twitter.com/kirankdash">Twitter</a> ||
+<a href="https://www.tiktok.com/@bgwebagency">TikTok</a> ||
+<a href="https://www.bgwebagency.in">Blog</a> ||
+<a href="https://www.facebook.com/bgwebagency">Facebook</a>
 
-[![](.github/screenshot.png)](https://nextra-docs-template.vercel.app)
+🙏 Support
 
-## Quick Start
+Please ⭐️ star this project and share it with others to show your support.
+[Follow me](https://github.com/kirandash) ❤️ for updates on future projects and
+tutorials!
 
-Click the button to clone this repository and deploy it on Vercel:
+---
 
-[![](https://vercel.com/button)](https://vercel.com/new/clone?s=https%3A%2F%2Fgithub.com%2Fshuding%2Fnextra-docs-template&showOptionalTeamCreation=false)
+</div>
 
 ## Local Development
 

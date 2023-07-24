@@ -2,16 +2,19 @@ import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <span>My Project</span>,
+  logo: <strong>frontendleetcode.com</strong>,
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: 'https://github.com/bgwebagency/frontendleetcode.com',
   },
   chat: {
-    link: 'https://discord.com',
+    link: 'https://discord.gg/62VR3MMCVm',
   },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  docsRepositoryBase: 'https://github.com/bgwebagency/frontendleetcode.com',
   footer: {
-    text: 'Nextra Docs Template',
+    text: 'Frontend Leetcode - Free resources for effective Front End interviews preparation',
+  },
+  sidebar: {
+    autoCollapse: true,
   },
 }
 
