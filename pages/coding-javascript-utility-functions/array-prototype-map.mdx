@@ -1,0 +1,55 @@
+# Array.prototype.map()
+
+**Difficulty:** Easy, **Duration:** 15 minutes, **Languages:** JS, TS, **Author:** [Kiran Dash](https://github.com/kirandash)
+
+## Question
+
+`Array.prototype.map()` is a powerful utility function in JavaScript that allows you to transform each element of an array using a callback function. In this exercise, you will implement a simplified version of `Array.prototype.map()`.
+
+## Example
+
+```ts filename="example.ts" copy
+const double = (x: number) => x * 2;
+const input = [1, 2, 3];
+input.myMap(double); // [2, 4, 6]
+```
+
+[**Launch exercise in editor**](https://stackblitz.com/edit/array-prototype-map-exercise)
+
+## Solution
+
+### with `.call()` method
+
+```ts filename="solution.ts" copy
+Array.prototype.myMap = function (callbackFn, thisArg) {
+  if (typeof callbackFn !== "function" || !callbackFn.call) {
+    throw new TypeError(`${callbackFn} is not a function`);
+  }
+
+  // input array can be accessed using this keyword
+  const len = this.length;
+  const outputArr = Array(len);
+
+  for (let k = 0; k < len; k++) {
+    // Object.hasOwn is used to handle the edge case for sparse array and avoid getting NaN in result
+    if (Object.hasOwn(this, k)) {
+      outputArr[k] = callbackFn.call(thisArg, this[k], k, this);
+    }
+  }
+  return outputArr;
+};
+```
+
+**Edge Cases:**
+
+- Handling Sparse arrays ex: `[1, , 3]` where `this.length` will be `3` but `this[1]` will be `undefined`. And we should not call `callbackFn` for `undefined` values. We handled this by using `Object.hasOwn(this, k)` in the for loop.
+- Handling `index` and `array` as fn params: Calling the `callbackFn` using `.call` method and pass `index` and `array` as arguments.
+- Handling `thisArg`: If `thisArg` is passed, the `callbackFn` should not be an arrow function, as arrow functions do not have their own `this` context.
+- Handling type check: If `callbackFn` is not a function or does not have a `call` method, we throw a `TypeError`.
+
+[**Launch Solution in Editor**](https://stackblitz.com/edit/array-prototype-map-solution)
+
+## Resources
+
+- [`Array.prototype.map` MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+- [`Array.prototype.map` Ecmascript](https://tc39.es/ecma262/multipage/indexed-collections.html#sec-array.prototype.map)
