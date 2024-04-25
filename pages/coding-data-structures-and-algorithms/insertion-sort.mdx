@@ -1,0 +1,96 @@
+# Insertion Sort
+
+**Difficulty:** Easy, **Duration:** 10 minutes, **Languages:** JS, TS, **Author:** [Kiran Dash](https://github.com/kirandash)
+
+Watch the live Stream on [YouTube](https://www.youtube.com/watch?v=wkFTD2k5mc0)
+
+## Question
+
+Implement the insertion sort algorithm to sort an array of numbers in ascending order.
+
+{/* Include image in mdx */}
+![Insertion Sort Input Output](/insertion-sort-input-output.png)
+
+## Example
+
+```ts filename="example.ts" copy
+insertionSort([3, 1, 2]); // [1, 2, 3]
+insertionSort([12, 16, 14, 1, 6, 9]); // [1, 6, 9, 12, 14, 16]
+```
+
+[**Launch exercise in editor**](https://stackblitz.com/edit/insertion-sort-exercise)
+
+## Solution
+
+**Questions to ask the interviewer**:
+
+1. Should I sort the array in ascending or descending order?
+2. Should the data be sorted in-place or should I return a new array by using additional data structures?
+3. What kind of data will be in the array? Will it be numbers, strings, or a mix of both?
+4. Will the array contain negative numbers? If yes, should I consider them while sorting?
+5. Does the array contain duplicate elements? If yes, should I consider them while sorting?
+
+**Explanation:**
+
+Please check the images below to understand the insertion sort algorithm step by step.
+
+1. Start from the second element (index 1) and compare it with the previous elements.
+2. If the current element is smaller than the previous element, swap them.
+3. Continue this process until the current element is greater than the previous element.
+
+```ts filename="solution.ts" copy
+function insertionSort(
+  arr: Array<Number>,
+  order: "ASC" | "DESC" = "ASC"
+): Array<Number> {
+  // Iterate through the array starting from second element
+  for (let i = 1; i < arr.length; i++) {
+    // Store the current value so that it can be swapped later
+    let currentValue = arr[i];
+    // Create another loop starting from i - 1
+    let j = i - 1; // pointer that points to index of element before the currentValue
+    // progress in backward direction till the currentValue is smaller than the previous element and swap
+
+    while (
+      (order === "ASC" && j >= 0 && currentValue < arr[j]) ||
+      (order === "DESC" && j >= 0 && currentValue > arr[j])
+    ) {
+      // Move the previous element to one position right
+      arr[j + 1] = arr[j];
+      // decrement the pointer to one step further in left
+      j--;
+    }
+    // Complete the swap by setting the currentValue to the final position which is one position next to the pointer we created earlier
+    arr[j + 1] = currentValue;
+  }
+
+  return arr;
+}
+```
+
+![Insertion Sort First Iteration](/insertion-sort-first-iteration.png)
+![Insertion Sort Second Iteration](/insertion-sort-second-iteration.png)
+![Insertion Sort Third Iteration](/insertion-sort-third-iteration.png)
+![Insertion Sort Fourth Iteration](/insertion-sort-fourth-iteration.png)
+![Insertion Sort Fifth Iteration](/insertion-sort-fifth-iteration.png)
+![Insertion Sort Sixth Iteration](/insertion-sort-sixth-iteration.png)
+![Insertion Sort Seventh Iteration](/insertion-sort-seventh-iteration.png)
+
+**Time Complexity**:
+
+- Best Case: O(n) when the array is already sorted. In this case, we only need to compare each element with its previous element. No swaps are required.
+- Average Case: O(n^2): In the average case, we need to compare each element with all the previous elements. The number of comparisons will be n(n-1)/2. The number of swaps will be n(n-1)/2. So the time complexity will be O(n^2).
+- Worst Case: O(n^2): In the worst case, the array will be sorted in descending order. In this case, we need to compare each element with all the previous elements. The number of comparisons will be n(n-1)/2. The number of swaps will be n(n-1)/2. So the time complexity will be O(n^2).
+
+**Space Complexity**:
+
+- O(1): because we are sorting the array in-place. No additional data structures are used. If we return a new array, the space complexity will be O(n).
+
+**Edge Cases**:
+
+1. If the array is empty, return an empty array.
+2. If the array input is large, consider using a different sorting algorithm like quicksort or mergesort. Because the time complexity of insertion sort is O(n^2).
+3. If input is not an array, throw a TypeError.
+4. If input array has non-integers, throw a TypeError.
+
+[**Launch Solution in Editor**](https://stackblitz.com/edit/insertion-sort-solution)
