@@ -1,0 +1,120 @@
+# Star Rating
+
+**Difficulty:** Medium, **Duration:** 25 minutes, **Languages:** JS, TS, **Author:** [Kiran Dash](https://github.com/kirandash)
+
+## Question
+
+Create a star rating component that can be used to display and capture user ratings.
+
+Wnen a user clicks on a star, the component should highlight the clicked star and all the stars to the left of it. When the user hovers over a star, the component should highlight the hovered star and all the stars to the left of it.
+
+When the user clicks on a star, the component should capture the rating and display it.
+
+![Star Rating Example](/star-rating-example.png)
+
+## Exercise
+
+[**Launch exercise in editor**](https://stackblitz.com/edit/star-rating-exercise)
+
+## Solution
+
+```ts filename="solution.ts" copy
+import * as React from "react";
+import "./style.css";
+
+// Reusable StarSvg component with configurable filled prop
+const StarSvg = ({ filled }: { filled: boolean }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill={filled ? "#fabb07" : "#dadce0"}
+    viewBox="0 0 24 24"
+    className="w-6 h-6"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+    />
+  </svg>
+);
+
+// Reusable StarRating Component
+const StarRating = ({
+  maxRating,
+  currentRating,
+  onChange,
+}: {
+  maxRating: number;
+  currentRating: number;
+  onChange: (newRating: number) => void;
+}) => {
+  // state to save the hover state temporarily
+  const [hoverPointer, setHoverPointer] = React.useState(null);
+
+  return (
+    <>
+      {Array.from({ length: maxRating }).map((_, idx) => {
+        const nonZeroIdx = idx + 1;
+        return (
+          <span
+            key={idx}
+            onMouseEnter={() => setHoverPointer(nonZeroIdx)}
+            // on mouse leave reset the pointer back to nul because this value should not be saved
+            onMouseLeave={() => setHoverPointer(null)}
+            onClick={() => onChange(nonZeroIdx)}
+          >
+            {/* Hover and click event listeners can not be attached to svg hence they are added to the span element above */}
+            <StarSvg
+              filled={
+                hoverPointer
+                  ? nonZeroIdx <= hoverPointer
+                  : nonZeroIdx <= currentRating
+              }
+            />
+          </span>
+        );
+      })}
+    </>
+  );
+};
+
+export default function App() {
+  const [fiveStarRating, setFiveStarRating] = React.useState(3);
+  const [threeStarRating, setThreeStarRating] = React.useState(0);
+  return (
+    <div>
+      <h3>5 star Rating system</h3>
+      <StarRating
+        maxRating={5}
+        currentRating={fiveStarRating}
+        onChange={(newRating) => {
+          setFiveStarRating(newRating);
+        }}
+      />
+      <br />
+      <h3>3 star Rating system</h3>
+      <StarRating
+        maxRating={3}
+        currentRating={threeStarRating}
+        onChange={(newRating) => {
+          setThreeStarRating(newRating);
+        }}
+      />
+    </div>
+  );
+}
+```
+
+[**Launch Solution in Editor**](https://stackblitz.com/edit/star-rating-solution-2)
+
+**Edge Cases**:
+
+- The component does not allow you to rate 0 stars. The minimum rating is 1 star.
+- The component does not allow you to rate half stars. The rating is always an integer value.
+- Solution does not have support for keyboard a11y
+- Solution does not support for RTL languages
+- The solution is not part of a form. If you want to use it in a form, you need to handle the form submission separately.
+
+## Resources
+
+- SVG icon used in the solution is from [Heroicons](https://heroicons.com/)
