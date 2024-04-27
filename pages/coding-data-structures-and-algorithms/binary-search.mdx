@@ -1,0 +1,104 @@
+# Binary Search
+
+**Difficulty:** Medium, **Duration:** 15 minutes, **Languages:** JS, TS, **Author:** [Kiran Dash](https://github.com/kirandash)
+
+Watch the live Stream on [YouTube](https://www.youtube.com/watch?v=Y7nPkDw_McI)
+
+## Question
+
+Implement the binary search algorithm to find the index of a given number in a sorted array of numbers. If the number is not found, return -1.
+
+## Example
+
+```ts filename="example.ts" copy
+binarySearch([1, 2, 3, 4, 5], 3); // 2
+binarySearch([1, 2, 3, 4, 5], 6); // -1
+binarySearch([11, 22, 33, 44, 55], 44); // 3
+```
+
+[**Launch exercise in editor**](https://stackblitz.com/edit/binary-search-exercise)
+
+## Solution
+
+**Explanation:**
+Binary search is a divide and conquer algorithm that finds the position of a target value within a sorted array. The algorithm compares the target value to the middle element of the array. If the target value is equal to the middle element, the position is returned. If the target value is less than the middle element, the search continues in the lower half of the array. If the target value is greater than the middle element, the search continues in the upper half of the array. This process continues until the target value is found or the subarray is empty.
+
+**Questions to ask the interviewer**:
+
+- Should I use a while loop or a recursive function to implement the binary search algorithm?
+
+**Solution using while loop**:
+
+```ts filename="solution.ts" copy
+export default function binarySearch(input: Array<number>, target: number) {
+  let left = 0;
+  let right = input.length - 1;
+
+  while (left <= right) {
+    // Calculate the mid index on every iteration
+    const mid = Math.floor((left + right) / 2);
+    // If target element matches the mid value return the index
+    if (target === input[mid]) {
+      return mid;
+    }
+    // If target element is less than the mid value then update the right index to mid - 1 so that the next search will happen on the left side of the input
+    else if (target < input[mid]) {
+      right = mid - 1;
+    }
+    // If target element is more than the mid value then update the left index to mid + 1 so that the next search will happen on the right side of the input
+    else if (target > input[mid]) {
+      left = mid + 1;
+    }
+  }
+  // If no match is found then return -1
+  return -1;
+}
+```
+
+[**Launch Solution in Editor**](https://stackblitz.com/edit/binary-search-solution)
+
+**Solution using recursive function**:
+
+```ts filename="solution.ts" copy
+export default function binarySearch(input: Array<number>, target: number) {
+  return recursiveBinarySearch(input, target, 0, input.length - 1);
+}
+
+// Recursive function
+function recursiveBinarySearch(
+  input: Array<number>,
+  target: number,
+  left,
+  right
+) {
+  const mid = Math.floor((left + right) / 2);
+  // This is important to stop the recursive loop
+  if (left > right) {
+    return -1;
+  }
+  if (target === input[mid]) {
+    return mid;
+  } else if (target < input[mid]) {
+    return recursiveBinarySearch(input, target, left, mid - 1);
+  } else if (target > input[mid]) {
+    return recursiveBinarySearch(input, target, mid + 1, right);
+  }
+}
+```
+
+[**Launch Solution in Editor**](https://stackblitz.com/edit/binary-search-recursive-solution)
+
+**Time Complexity**:
+
+- Best Case: O(1) when the target element is found at the middle of the array.
+- Average Case: O(log n) because the algorithm divides the array in half on each iteration.
+- Worst Case: O(log n) when the target element is not found in the array.
+
+**Space Complexity**:
+
+- O(1) because the algorithm is using a constant amount of space.
+- If we consider the space used by the recursive function, the space complexity will be O(log n) because the function calls are stored in the call stack.
+
+**Edge Cases**:
+
+- If the input array is not an array of integers, throw an error.
